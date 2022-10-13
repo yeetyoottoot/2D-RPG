@@ -1,2 +1,2 @@
 # 2D-RPG
-2d rpg game (work in progress)
+2D rpg game portfolio
