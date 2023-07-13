@@ -1,6 +1,6 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace RPG.Runtime.Character
@@ -22,12 +22,23 @@ namespace RPG.Runtime.Character
         // Movement Direction
         private Vector2 _targetDirection;
 
+        //sprint activation bool
+        private bool sprintOn;
+
         /// <summary>
         /// Process the player's input
         /// </summary>
         private void ProcessInput()
         {
             _targetDirection = _rawMovementInput.normalized;
+            if(Input.GetKey(KeyCode.LeftShift) == true)
+            {
+                sprintOn = true;
+            }
+            else
+            {
+                sprintOn = false;
+            }
         }
 
         /// <summary>
@@ -35,8 +46,16 @@ namespace RPG.Runtime.Character
         /// </summary>
         private void ProcessMovement()
         {
-            Vector2 movementForce = _targetDirection * _settings.Speed;
-            _rb.velocity = movementForce;
+            if (sprintOn == true)
+            {
+                Vector2 movementForce = _targetDirection * _settings.sprintSpeed;
+                _rb.velocity = movementForce;
+            } 
+            else
+            {
+                Vector2 movementForce = _targetDirection * _settings.Speed;
+                _rb.velocity = movementForce;
+            }
         }
 
         void Awake()
