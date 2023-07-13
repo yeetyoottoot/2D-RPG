@@ -8,5 +8,6 @@ namespace RPG.Runtime.Character
     public class PlayerSettings : ScriptableObject
     {
         [Min(0.0f)] public float Speed = 5.0f;
+        [Min(0.0f)] public float sprintSpeed = 10f;
     }
 }
