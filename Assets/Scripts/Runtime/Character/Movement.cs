@@ -12,6 +12,7 @@ namespace RPG.Runtime.Character
         [SerializeField] private PlayerSettings _settings;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private BoxCollider2D _mapBounds;
 
         // Input Actions
         private InputAction _moveAction;
@@ -39,7 +40,16 @@ namespace RPG.Runtime.Character
         /// </summary>
         private void ProcessMovement()
         {
-            Vector2 movementForce = _targetDirection * ((_sprintOn == true) ? _settings.SprintSpeed : _settings.WalkSpeed);
+            Vector2 movementForce = _targetDirection * (_sprintOn ? _settings.SprintSpeed : _settings.WalkSpeed);
+            movementForce.x *= (
+                (transform.position.x > _mapBounds.bounds.max.x - 1.5f && Mathf.Sign(movementForce.x) == 1) || 
+                (transform.position.x < _mapBounds.bounds.min.x + 1.5f && Mathf.Sign(movementForce.x) == -1)
+                ) ? 0f : 1f;
+            movementForce.y *= (
+                (transform.position.y >= _mapBounds.bounds.max.y && Mathf.Sign(movementForce.y) == 1) || 
+                (transform.position.y < _mapBounds.bounds.min.y && Mathf.Sign(movementForce.y) == -1)
+                ) ? 0f : 1f;
+
             _rb.velocity = movementForce;
         }
 
