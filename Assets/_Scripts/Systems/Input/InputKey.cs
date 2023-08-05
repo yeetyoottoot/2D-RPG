@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public static class InputKey
 {
     public static event Action<MouseAction, Vector3> MouseClickEvent;

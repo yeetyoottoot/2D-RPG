@@ -3,11 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MusicTheory
+namespace MusicTheory.Harmony
 {
     public static class TonalDefinitions
     {
-
+        public static int Effectiveness(this Genre a, Genre b) => a switch
+        {
+            Genre.Rock => b switch { Genre.Classical => +1, Genre.Jazz => -1, Genre.Folk => +1, _ => 0, },
+            Genre.Jazz => b switch { Genre.Blues => +1, Genre.Classical => -1, Genre.Rock => +1, Genre.Folk => -1, _ => 0, },
+            Genre.Folk => b switch { Genre.Blues => -1, Genre.Rock => -1, Genre.Jazz => +1, _ => 0, },
+            Genre.Blues => b switch { Genre.Jazz => -1, Genre.Classical => +1, Genre.Folk => +1, _ => 0, },
+            Genre.Classical => b switch { Genre.Blues => -1, Genre.Rock => -1, Genre.Jazz => +1, _ => 0, },
+            _ => 0,
+        };
     }
 
     public struct Tonality

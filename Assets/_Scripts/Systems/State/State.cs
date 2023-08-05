@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
-//using Audio;
 using UnityEngine;
 
 public abstract class State
 {
     #region REFERENCES
 
-    //protected DataManager Data => DataManager.Io;
-    //protected AudioManager Audio => AudioManager.Io;
+    protected DataManager Data => DataManager.Io;
+    protected AudioManager Audio => AudioManager.Io;
 
     #endregion REFERENCES
 
@@ -125,6 +124,13 @@ public abstract class State
 
         if (Cam.Io.Camera.orthographic)
         {
+            RaycastHit2D hitUI = Physics2D.Raycast(mousePos, Vector2.zero);
+            if (hitUI.collider != null && hitUI.collider.gameObject.TryGetComponent<Clickable>(out _))
+            {
+                ClickedOn(hitUI.collider.gameObject);
+                return;
+            }
+
             var hit = Physics2D.Raycast(Cam.Io.Camera.ScreenToWorldPoint(mousePos), Vector2.zero);
             if (hit.collider != null) ClickedOn(hit.collider.gameObject);
         }

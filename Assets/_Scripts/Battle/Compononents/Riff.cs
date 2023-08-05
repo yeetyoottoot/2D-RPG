@@ -1,6 +1,6 @@
 using UnityEngine;
 using MusicTheory.Rhythms;
-using MusicTheory;
+using MusicTheory.Harmony;
 
 public class Riff
 {
@@ -13,6 +13,7 @@ public class Riff
     /// </summary>
     public double LengthInSec => (EndBeat.BeatValue - StartBeat.BeatValue) / 12 * (60 / BPM);
     public int BPM { get; private set; }
+    public Genre Genre;
     public Instrument Instrument;
     public Tonality Tonality { get; private set; }
     public AudioClip AudioClip { get; private set; }
@@ -26,6 +27,7 @@ public class Riff
     public BeatLocation EndBeat { get; private set; } = BeatLocation.OneBarThenOff;
 
     public Riff SetBPM(int bpm) { BPM = bpm; return this; }
+    public Riff SetGenre(Genre genre) { Genre = genre; return this; }
     public Riff SetInstrument(Instrument instrument) { Instrument = instrument; return this; }
     public Riff SetTonality(Tonality tonality) { Tonality = tonality; return this; }
     public Riff SetAudioClip(AudioClip audioClip) { AudioClip = audioClip; return this; }
